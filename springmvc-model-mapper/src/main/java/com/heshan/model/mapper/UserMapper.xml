@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- sl:使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.heshan.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.heshan.model.User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        <![CDATA[
+		id,name,password
+	    ]]>
+    </sql>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+        INSERT INTO R_USER (
+        	id ,
+        	name ,
+        	password
+        ) VALUES (
+        	#{id} ,
+        	#{name} ,
+        	#{password}
+        )
+    ]]>
+        <!--
+            oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL
+            DB2: order="BEFORE"" values nextval for sequenceName
+        <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
+            SELECT sequenceName.nextval AS ID FROM DUAL
+        </selectKey>
+        -->
+    </insert>
+
+
+    <sql id="update_sql">
+        <set>
+            <if test="id != null">
+                id = #{id} ,
+            </if>
+            <if test="name != null">
+                name = #{name} ,
+            </if>
+            <if test="password != null">
+                password = #{password}
+            </if>
+
+        </set>
+    </sql>
+    <update id="update" >
+        UPDATE  R_USER
+        <include refid="update_sql" />
+        WHERE
+        id = #{id}
+    </update>
+
+    <delete id="delete">
+        <![CDATA[
+        DELETE FROM R_USER WHERE
+        id = #{id}
+    ]]>
+    </delete>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT <include refid="columns" />
+        <![CDATA[
+		    FROM R_USER
+	        WHERE
+		        id = #{id}
+	    ]]>
+    </select>
+
+    <sql id="findPage_where">
+        <!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="password != null">
+                AND password =#{password}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findPage_count" resultType="long">
+        SELECT count(*) FROM R_USER
+        <include refid="findPage_where"/>
+    </select>
+
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+        SELECT <include refid="columns" />
+        FROM R_USER
+        <include refid="findPage_where"/>
+    </select>
+
+
+    <select id="findUser" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT ${include}
+		    FROM R_USER_${date}
+	        WHERE 1=1
+             <if test="filter!= null">
+                 and ${filter}
+             </if>
+
+    </select>
+
+</mapper>
+
