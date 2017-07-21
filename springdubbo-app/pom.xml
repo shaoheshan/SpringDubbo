@@ -6,14 +6,30 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>springmvc-model</artifactId>
-    <packaging>jar</packaging>
-    <name>springmvc-model</name>
-    <description>model</description>
+    <artifactId>springDubbo-app</artifactId>
+    <packaging>war</packaging>
+    <name>springDubbo</name>
+    <description>APP</description>
+    <dependencies>
+    <dependency>
+        <groupId>com.heshan.dubbo</groupId>
+        <artifactId>springDubbo-service</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+      <dependency>
+            <groupId>com.heshan.dubbo</groupId>
+            <artifactId>springDubbo-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.heshan.framework</groupId>
+            <artifactId>framework-redis-jredis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
-
+    </dependencies>
     <build>
-       <!-- <resources>
+        <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
@@ -25,8 +41,8 @@
             <resource>
                 <directory>src/main/resources/${profiles.active}</directory>
             </resource>
-        </resources>-->
-      <!--  <plugins>
+        </resources>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -35,7 +51,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
-            &lt;!&ndash; 发布插件 &ndash;&gt;
+            <!-- 发布插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -43,6 +59,7 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-        </plugins>-->
+        </plugins>
+
     </build>
 </project>

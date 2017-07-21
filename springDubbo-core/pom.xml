@@ -6,18 +6,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>springmvc-interface</artifactId>
+    <artifactId>springDubbo-core</artifactId>
     <packaging>jar</packaging>
-    <name>springmvc-interface</name>
-    <description>interface</description>
+    <name>springDubbo-core</name>
+    <description>core</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.heshan.dubbo</groupId>
-            <artifactId>springmvc-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+
     <build>
        <!-- <resources>
             <resource>
@@ -32,7 +26,7 @@
                 <directory>src/main/resources/${profiles.active}</directory>
             </resource>
         </resources>-->
-       <!-- <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -41,7 +35,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
-            &lt;!&ndash; 发布插件 &ndash;&gt;
+            <!-- 发布插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -49,6 +43,6 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-        </plugins>-->
+        </plugins>
     </build>
 </project>

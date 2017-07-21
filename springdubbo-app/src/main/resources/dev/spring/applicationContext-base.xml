@@ -29,4 +29,5 @@
     <import resource="classpath:/spring/applicationContext-dataSource.xml" />
     <import resource="classpath:/spring/applicationContext-mybatis.xml" />
     <import resource="classpath:/spring/applicationContext-dubbo.xml" />
+
 </beans>

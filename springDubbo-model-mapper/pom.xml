@@ -6,30 +6,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>springDubbo-app</artifactId>
-    <packaging>war</packaging>
-    <name>springDubbo</name>
-    <description>APP</description>
-    <dependencies>
-    <dependency>
-        <groupId>com.heshan.dubbo</groupId>
-        <artifactId>springmvc-service</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-      <dependency>
-            <groupId>com.heshan.dubbo</groupId>
-            <artifactId>springmvc-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.heshan.framework</groupId>
-            <artifactId>framework-redis-jredis</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+    <artifactId>springDubbo-model-mapper</artifactId>
+    <packaging>jar</packaging>
+    <name>springDubbo-mapper</name>
+    <description>mapper</description>
 
-    </dependencies>
+
     <build>
-        <resources>
+       <!-- <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
@@ -41,8 +25,8 @@
             <resource>
                 <directory>src/main/resources/${profiles.active}</directory>
             </resource>
-        </resources>
-        <plugins>
+        </resources>-->
+       <!-- <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -51,7 +35,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
-            <!-- 发布插件 -->
+            &lt;!&ndash; 发布插件 &ndash;&gt;
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -59,7 +43,6 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-        </plugins>
-
+        </plugins>-->
     </build>
 </project>

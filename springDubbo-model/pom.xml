@@ -6,22 +6,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>springmvc-service</artifactId>
+    <artifactId>springDubbo-model</artifactId>
     <packaging>jar</packaging>
-    <name>springmvc-service</name>
-    <description>service</description>
-     <dependencies>
-         <dependency>
-             <groupId>com.heshan.dubbo</groupId>
-             <artifactId>springmvc-interface</artifactId>
-             <version>0.0.1-SNAPSHOT</version>
-         </dependency>
-         <dependency>
-             <groupId>com.heshan.dubbo</groupId>
-             <artifactId>springmvc-dao</artifactId>
-             <version>0.0.1-SNAPSHOT</version>
-         </dependency>
-     </dependencies>
+    <name>springDubbo-model</name>
+    <description>model</description>
+
 
     <build>
        <!-- <resources>
@@ -37,7 +26,7 @@
                 <directory>src/main/resources/${profiles.active}</directory>
             </resource>
         </resources>-->
-        <!--<plugins>
+      <!--  <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
