@@ -15,7 +15,7 @@ public class AppConfig {
     private static Object lock = new Object();
     private static AppConfig config = null;
     private static ResourceBundle rb = null;
-    private static final String CONFIG_FILE = "common";
+    private static final String CONFIG_FILE = "conf/common";
 
     private AppConfig() {
         rb = ResourceBundle.getBundle(CONFIG_FILE);

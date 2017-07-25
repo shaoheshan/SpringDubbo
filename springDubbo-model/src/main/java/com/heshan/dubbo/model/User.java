@@ -1,4 +1,4 @@
-package com.heshan.model;
+package com.heshan.dubbo.model;
 
 /**
  * @author <a href="mailto:heshan664754022@gmail.com">Frank</a>

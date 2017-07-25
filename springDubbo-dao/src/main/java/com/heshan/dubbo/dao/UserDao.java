@@ -1,6 +1,7 @@
-package com.heshan.dao;
+package com.heshan.dubbo.dao;
 
-import com.heshan.model.User;
+import com.heshan.dubbo.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @description
  * @date 2016/5/24 15:56
  */
+@Repository
 public interface  UserDao {
 
     public void  insert(User user);

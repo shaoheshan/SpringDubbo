@@ -1,6 +1,6 @@
 package com.heshan.dubbo.service;
 
-import com.heshan.model.User;
+import com.heshan.dubbo.model.User;
 
 import java.util.List;
 import java.util.Map;

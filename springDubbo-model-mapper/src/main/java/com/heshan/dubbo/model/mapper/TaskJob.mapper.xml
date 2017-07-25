@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="com.heshan.dubbo.dao.TaskDao">
+
+	 <resultMap id="BaseResultMap" type="com.heshan.dubbo.model.TaskJob">
+        	    <id column="id"  property="id" />
+	       		 <result property="taskId" column="task_id" />
+	       		 <result property="name" column="name" />
+	       		 <result property="jobType" column="job_type" />
+	       		 <result property="producerId" column="producer_id" />
+	       		 <result property="consumerId" column="consumer_id" />
+	       		 <result property="jobQuartzTime" column="job_quartz_time" />
+	       		 <result property="jobEndTime" column="job_end_time" />
+	       		 <result property="channel" column="channel" />
+	       		 <result property="accountId" column="account_id" />
+	       		 <result property="status" column="status" />
+	       		 <result property="runType" column="run_type" />
+	       		 <result property="topic" column="topic" />
+	       		 <result property="taskTag" column="task_tag" />
+	       		 <result property="createUser" column="create_user" />
+	       		 <result property="createTime" column="create_time" />
+	       		 <result property="updateUser" column="update_user" />
+	       		 <result property="updateTime" column="update_time" />
+	       		 <result property="descr" column="descr" />
+	       		 <result property="remark" column="remark" />
+	</resultMap>
+	
+	<sql id="BaseColumnList">
+	    <![CDATA[
+			CP_TSK_SERVICE_TASK_JOB.id id ,
+			CP_TSK_SERVICE_TASK_JOB.task_id taskId ,
+			CP_TSK_SERVICE_TASK_JOB.name name ,
+			CP_TSK_SERVICE_TASK_JOB.job_type jobType ,
+			CP_TSK_SERVICE_TASK_JOB.producer_id producerId ,
+			CP_TSK_SERVICE_TASK_JOB.consumer_id consumerId ,
+			CP_TSK_SERVICE_TASK_JOB.job_quartz_time jobQuartzTime ,
+			CP_TSK_SERVICE_TASK_JOB.job_end_time jobEndTime ,
+			CP_TSK_SERVICE_TASK_JOB.channel channel ,
+			CP_TSK_SERVICE_TASK_JOB.account_id accountId ,
+			CP_TSK_SERVICE_TASK_JOB.status status ,
+			CP_TSK_SERVICE_TASK_JOB.run_type runType ,
+			CP_TSK_SERVICE_TASK_JOB.topic topic ,
+			CP_TSK_SERVICE_TASK_JOB.task_tag taskTag ,
+			CP_TSK_SERVICE_TASK_JOB.create_user createUser ,
+			CP_TSK_SERVICE_TASK_JOB.create_time createTime ,
+			CP_TSK_SERVICE_TASK_JOB.update_user updateUser ,
+			CP_TSK_SERVICE_TASK_JOB.update_time updateTime ,
+			CP_TSK_SERVICE_TASK_JOB.descr descr ,
+			CP_TSK_SERVICE_TASK_JOB.remark remark 
+	    ]]>
+	</sql>
+	
+	<sql id="listWhere">
+	       <if test="id != null ">
+				and id = #{id}
+			</if>
+	       <if test="taskId != null and taskId != ''">
+				and task_id = #{taskId}
+			</if>
+	       <if test="name != null and name != ''">
+				and name = #{name}
+			</if>
+	       <if test="jobType != null ">
+				and job_type = #{jobType}
+			</if>
+	       <if test="producerId != null and producerId != ''">
+				and producer_id = #{producerId}
+			</if>
+	       <if test="consumerId != null and consumerId != ''">
+				and consumer_id = #{consumerId}
+			</if>
+	       <if test="minJobQuartzTime != null">
+    			<![CDATA[
+					and job_quartz_time >= #{minJobQuartzTime}
+	    		]]>
+		   </if>
+	       <if test="maxJobQuartzTime != null">
+	    		<![CDATA[
+					and job_quartz_time <= #{maxJobQuartzTime}
+		    	]]>
+		   </if>
+	       <if test="jobQuartzTime != null and jobQuartzTime != ''">
+				and job_quartz_time = #{jobQuartzTime}
+			</if>
+	       <if test="minJobEndTime != null">
+    			<![CDATA[
+					and job_end_time >= #{minJobEndTime}
+	    		]]>
+		   </if>
+	       <if test="maxJobEndTime != null">
+	    		<![CDATA[
+					and job_end_time <= #{maxJobEndTime}
+		    	]]>
+		   </if>
+	       <if test="jobEndTime != null ">
+				and job_end_time = #{jobEndTime}
+			</if>
+	       <if test="channel != null and channel != ''">
+				and channel = #{channel}
+			</if>
+	       <if test="accountId != null ">
+				and account_id = #{accountId}
+			</if>
+	       <if test="status != null ">
+				and status = #{status}
+			</if>
+			<if test="runType != null ">
+				and run_type = #{runType}
+			</if>
+			
+			<if test="topic != null and topic != ''">
+				and topic = #{topic}
+			</if>
+			
+	       <if test="taskTag != null and taskTag != ''">
+				and task_tag = #{taskTag}
+			</if>
+	       <if test="createUser != null ">
+				and create_user = #{createUser}
+			</if>
+	       <if test="minCreateTime != null">
+    			<![CDATA[
+					and create_time >= #{minCreateTime}
+	    		]]>
+		   </if>
+	       <if test="maxCreateTime != null">
+	    		<![CDATA[
+					and create_time <= #{maxCreateTime}
+		    	]]>
+		   </if>
+	       <if test="createTime != null ">
+				and create_time = #{createTime}
+			</if>
+	       <if test="updateUser != null ">
+				and update_user = #{updateUser}
+			</if>
+	       <if test="minUpdateTime != null">
+    			<![CDATA[
+					and update_time >= #{minUpdateTime}
+	    		]]>
+		   </if>
+	       <if test="maxUpdateTime != null">
+	    		<![CDATA[
+					and update_time <= #{maxUpdateTime}
+		    	]]>
+		   </if>
+	       <if test="updateTime != null ">
+				and update_time = #{updateTime}
+			</if>
+	       <if test="descr != null and descr != ''">
+				and descr = #{descr}
+			</if>
+	       <if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+   </sql>
+	
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+	        insert into
+	        	CP_TSK_SERVICE_TASK_JOB 
+	        <trim prefix="(" suffix=")" suffixOverrides="," >
+		     				<if test="taskId != null">
+					       	 task_id ,
+					      </if>
+		     				<if test="name != null">
+					       	 name ,
+					      </if>
+		     				<if test="jobType != null">
+					       	 job_type ,
+					      </if>
+		     				<if test="producerId != null">
+					       	 producer_id ,
+					      </if>
+		     				<if test="consumerId != null">
+					       	 consumer_id ,
+					      </if>
+		     				<if test="jobQuartzTime != null">
+					       	 job_quartz_time ,
+					      </if>
+		     				<if test="jobEndTime != null">
+					       	 job_end_time ,
+					      </if>
+		     				<if test="channel != null">
+					       	 channel ,
+					      </if>
+		     				<if test="accountId != null">
+					       	 account_id ,
+					      </if>
+		     				<if test="status != null">
+					       	 status ,
+					      </if>
+					      <if test="runType != null">
+					       	 run_type ,
+					      </if>
+					      
+					      <if test="topic != null">
+					       	 topic ,
+					      </if>
+					      
+		     				<if test="taskTag != null">
+					       	 task_tag ,
+					      </if>
+		     				<if test="createUser != null">
+					       	 create_user ,
+					      </if>
+		     				<if test="createTime != null">
+					       	 create_time ,
+					      </if>
+		     				<if test="updateUser != null">
+					       	 update_user ,
+					      </if>
+		     				<if test="updateTime != null">
+					       	 update_time ,
+					      </if>
+		     				<if test="descr != null">
+					       	 descr ,
+					      </if>
+		     				<if test="remark != null">
+					       	 remark ,
+					      </if>
+	        </trim>
+    		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	        		
+	        		 <if test="taskId != null">
+						    	 #{taskId} ,
+					      </if> 
+	        		 <if test="name != null">
+						    	 #{name} ,
+					      </if> 
+	        		 <if test="jobType != null">
+						    	 #{jobType} ,
+					      </if> 
+	        		 <if test="producerId != null">
+						    	 #{producerId} ,
+					      </if> 
+	        		 <if test="consumerId != null">
+						    	 #{consumerId} ,
+					      </if> 
+	        		 <if test="jobQuartzTime != null">
+						    	 #{jobQuartzTime} ,
+					      </if> 
+	        		 <if test="jobEndTime != null">
+						    	 #{jobEndTime} ,
+					      </if> 
+	        		 <if test="channel != null">
+						    	 #{channel} ,
+					      </if> 
+	        		 <if test="accountId != null">
+						    	 #{accountId} ,
+					      </if> 
+	        		 <if test="status != null">
+						    	 #{status} ,
+					      </if> 
+				       <if test="runType != null">
+					    	 #{runType} ,
+				      </if> 
+				      <if test="topic != null">
+					    	 #{topic} ,
+				      </if> 
+	        		 <if test="taskTag != null">
+						    	 #{taskTag} ,
+					      </if> 
+	        		 <if test="createUser != null">
+						    	 #{createUser} ,
+					      </if> 
+	        		 <if test="createTime != null">
+						    	 #{createTime} ,
+					      </if> 
+	        		 <if test="updateUser != null">
+						    	 #{updateUser} ,
+					      </if> 
+	        		 <if test="updateTime != null">
+						    	 #{updateTime} ,
+					      </if> 
+	        		 <if test="descr != null">
+						    	 #{descr} ,
+					      </if> 
+	        		 <if test="remark != null">
+						    	 #{remark} ,
+					      </if> 
+	       </trim>
+	</insert>
+	
+	 <select id="count" resultType="int">
+   		select 
+   			count(*)
+   		from
+   			CP_TSK_SERVICE_TASK_JOB
+   		<where>
+   			<include refid="listWhere"/>
+   		</where>
+   </select>
+
+	<select id="findList" resultMap="BaseResultMap" >
+   		select 
+   			 <include refid="BaseColumnList"/>
+   		from
+   			CP_TSK_SERVICE_TASK_JOB
+   		<where>
+   			<include refid="listWhere"/>
+   		</where>
+   		<if test="sortName != null ">
+   			  order by 
+				<if test="'id' == sortName">
+			       id
+			    </if>
+				<if test="'taskId' == sortName">
+			       task_id
+			    </if>
+				<if test="'name' == sortName">
+			       name
+			    </if>
+				<if test="'jobType' == sortName">
+			       job_type
+			    </if>
+				<if test="'producerId' == sortName">
+			       producer_id
+			    </if>
+				<if test="'consumerId' == sortName">
+			       consumer_id
+			    </if>
+				<if test="'jobQuartzTime' == sortName">
+			       job_quartz_time
+			    </if>
+				<if test="'jobEndTime' == sortName">
+			       job_end_time
+			    </if>
+				<if test="'channel' == sortName">
+			       channel
+			    </if>
+				<if test="'accountId' == sortName">
+			       account_id
+			    </if>
+				<if test="'status' == sortName">
+			       status
+			    </if>
+			    <if test="'topic' == sortName">
+			       topic
+			    </if>
+				<if test="'taskTag' == sortName">
+			       task_tag
+			    </if>
+				<if test="'createUser' == sortName">
+			       create_user
+			    </if>
+				<if test="'createTime' == sortName">
+			       create_time
+			    </if>
+				<if test="'updateUser' == sortName">
+			       update_user
+			    </if>
+				<if test="'updateTime' == sortName">
+			       update_time
+			    </if>
+				<if test="'descr' == sortName">
+			       descr
+			    </if>
+				<if test="'remark' == sortName">
+			       remark
+			    </if>
+   			<if test="order != null ">
+   				${ order}
+   			</if>
+   		</if>
+   		<if test="beginIndex != null and pageSize != null">
+			limit #{beginIndex} , #{pageSize}
+		</if>
+   </select>
+
+<update id="update"   >
+   		 update CP_TSK_SERVICE_TASK_JOB
+    <set>
+					<if test="taskId != null">
+			        task_id = #{taskId},
+			      </if>
+					<if test="name != null">
+			        name = #{name},
+			      </if>
+					<if test="jobType != null">
+			        job_type = #{jobType},
+			      </if>
+					<if test="producerId != null">
+			        producer_id = #{producerId},
+			      </if>
+					<if test="consumerId != null">
+			        consumer_id = #{consumerId},
+			      </if>
+					<if test="jobQuartzTime != null">
+			        job_quartz_time = #{jobQuartzTime},
+			      </if>
+					<if test="jobEndTime != null">
+			        job_end_time = #{jobEndTime},
+			      </if>
+					<if test="channel != null">
+			        channel = #{channel},
+			      </if>
+					<if test="accountId != null">
+			        account_id = #{accountId},
+			      </if>
+					<if test="status != null">
+			        status = #{status},
+			      </if>
+			      <if test="runType != null">
+			        run_type = #{runType},
+			      </if>
+			      <if test="topic != null">
+			        topic = #{topic},
+			      </if>
+					<if test="taskTag != null">
+			        task_tag = #{taskTag},
+			      </if>
+					<if test="createUser != null">
+			        create_user = #{createUser},
+			      </if>
+					<if test="createTime != null">
+			        create_time = #{createTime},
+			      </if>
+					<if test="updateUser != null">
+			        update_user = #{updateUser},
+			      </if>
+					<if test="updateTime != null">
+			        update_time = #{updateTime},
+			      </if>
+					<if test="descr != null">
+			        descr = #{descr},
+			      </if>
+					<if test="remark != null">
+			        remark = #{remark},
+			      </if>
+    </set>
+    where id = #{id}
+   </update>
+
+    
+    <delete id="deleteById" parameterType="long" >
+	    delete from CP_TSK_SERVICE_TASK_JOB
+	    where id = #{id}
+  </delete>
+    <delete id="delete"  >
+	    delete from CP_TSK_SERVICE_TASK_JOB
+	    <where>
+   			<include refid="listWhere"/>
+   		</where>
+  </delete>
+    
+  
+    <select id="getById" resultMap="BaseResultMap"  parameterType="Long">
+	   select 
+   			 <include refid="BaseColumnList"/>
+   		from
+	        CP_TSK_SERVICE_TASK_JOB 
+	     where id = #{id}
+    </select>
+<select id="fetch" resultMap="BaseResultMap">
+		select
+		<include refid="BaseColumnList" />
+		from
+		CP_TSK_SERVICE_TASK_JOB
+		<where>
+			<include refid="listWhere" />
+		</where>
+	</select>
+</mapper>
+

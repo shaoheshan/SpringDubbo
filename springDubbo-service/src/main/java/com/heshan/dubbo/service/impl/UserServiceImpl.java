@@ -1,8 +1,8 @@
 package com.heshan.dubbo.service.impl;
 
-import com.heshan.dao.UserDao;
+import com.heshan.dubbo.dao.UserDao;
 import com.heshan.dubbo.service.UserService;
-import com.heshan.model.User;
+import com.heshan.dubbo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

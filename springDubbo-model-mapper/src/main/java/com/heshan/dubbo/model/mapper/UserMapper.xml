@@ -5,9 +5,9 @@
 
 
 <!-- sl:使用namespace的话sql搜索定位会比较方便 -->
-<mapper namespace="com.heshan.dao.UserDao">
+<mapper namespace="com.heshan.dubbo.dao.UserDao">
 
-    <resultMap id="BaseResultMap" type="com.heshan.model.User">
+    <resultMap id="BaseResultMap" type="com.heshan.dubbo.model.User">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="password" column="password"/>
