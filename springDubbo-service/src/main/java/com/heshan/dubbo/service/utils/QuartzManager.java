@@ -28,7 +28,7 @@ public class QuartzManager {
     private static String JOb_TRIGGER = "job_trigger_";
 
 	/**创建*/
-	public static void addJob(String jobName, QuartzJob job, String time,JobDataMap mapDate,SchedulerFactoryBean schedulerFactory) throws SchedulerException, ParseException {
+	public static void addJob(String jobName, QuartzJob job, String time,JobDataMap mapData,SchedulerFactoryBean schedulerFactory) throws SchedulerException, ParseException {
 	        /**2.2.1*/
 		    try {
 		        Scheduler scheduler=schedulerFactory.getScheduler();
@@ -39,11 +39,11 @@ public class QuartzManager {
 		        if (null == trigger) {
 		            JobDetail jobDetail = JobBuilder.newJob(QuartzJob.class)
 		                .withIdentity(jobName, JOB_GROUP_NAME).build();
-					if (mapDate!=null){
-						jobDetail.getJobDataMap().putAll(mapDate);
+					if (mapData!=null){
+						jobDetail.getJobDataMap().putAll(mapData);
 					}
 					//jobDetail.getJobDataMap().put("jobSays", "Hello World!");
-					//jobDetail.getJobDataMap().put("scheduleJob", mapDate);
+					//jobDetail.getJobDataMap().put("scheduleJob", mapData);
 		            //表达式调度构建器
 		            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);
 		            //按新的cronExpression表达式构建一个新的trigger
@@ -59,7 +59,7 @@ public class QuartzManager {
               /**1.8.5*/
               /*Scheduler sched = schedulerFactory.getScheduler();
               JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, job.getClass());// 任务名，任务组，任务执行类
-              jobDetail.setJobDataMap(mapDate);
+              jobDetail.setJobDataMap(mapData);
               CronTrigger trigger = new CronTrigger(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME);// 触发器名,触发器组
               trigger.setCronExpression(time);// 触发器时间设定
               sched.scheduleJob(jobDetail, trigger);
@@ -69,11 +69,6 @@ public class QuartzManager {
               if (!sched.isShutdown())
                   sched.start();*/
 	}
-	
-	
-
-	
-
 	/**
 	 * 修改一个任务的触发时间(使用默认的任务组名，触发器名，触发器组名)
 	 * @param jobName
@@ -95,7 +90,6 @@ public class QuartzManager {
 	        .withSchedule(scheduleBuilder).build();
 	    //按新的trigger重新设置job执行
 	    scheduler.rescheduleJob(triggerKey, trigger);
-	    
 	    /**1.8.5*/
 	    /*Scheduler sched = schedulerFactory.getScheduler();
 		Trigger trigger = sched.getTrigger(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME);
@@ -154,7 +148,7 @@ public class QuartzManager {
         
     }    
     /**立即执行*/
-    public static void runJob(String jobName,Job job, String time,JobDataMap mapDate,SchedulerFactoryBean schedulerFactory) throws SchedulerException{
+    public static void runJob(String jobName,Job job, String time,JobDataMap mapData,SchedulerFactoryBean schedulerFactory) throws SchedulerException{
           /**2.2.1*/
           Scheduler scheduler =  schedulerFactory.getScheduler();
           
@@ -166,7 +160,7 @@ public class QuartzManager {
                       .withIdentity(jobName, JOB_GROUP_NAME).build();
                   //表达式调度构建器
                   SimpleTriggerImpl  simpleTriggerImpl = (SimpleTriggerImpl)TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME)
-						  .withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount(1,0))//配置重复次数和间隔时间
+						  .withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount(1,1))//配置重复次数和间隔时间
 						  .startNow()//设置从当前开始
 						  .build();
                   scheduler.scheduleJob(jobDetail, simpleTriggerImpl);
@@ -181,7 +175,7 @@ public class QuartzManager {
           /**1.8.5*/
           /*Scheduler sched = schedulerFactory.getScheduler();
           JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, job.getClass());// 任务名，任务组，任务执行类
-          jobDetail.setJobDataMap(mapDate);
+          jobDetail.setJobDataMap(mapData);
           Date now = new Date();
           SimpleTrigger simpleTrigger = new SimpleTrigger(JOb_TRIGGER+jobName,TRIGGER_GROUP_NAME, new Date(now.getTime() + 1000L),null,0,0L); 
           sched.scheduleJob(jobDetail, simpleTrigger);
@@ -191,10 +185,7 @@ public class QuartzManager {
           if (!sched.isShutdown())
               sched.start();*/
     }
-    
-    
-    
-    
+
 	/**
 	 * 移除一个任务
 	 * @param jobName
@@ -227,8 +218,7 @@ public class QuartzManager {
         }      
         return false;    
             
-    }     
-         
+    }
     public static void main(String[] args){     
         System.out.println(isValidExpression("1 12 12 28 8 ? 2016"));
         System.out.println(isValidExpression("0 0/10 * * * ?"));  

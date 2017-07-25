@@ -107,7 +107,7 @@
 				<!-- JobStore 配置 -->
 				<prop key="org.quartz.jobStore.class" >org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
 				<prop key="org.quartz.jobStore.driverDelegateClass" >org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
-				<prop key="oorg.quartz.jobStore.useProperties">true</prop>
+				<prop key="org.quartz.jobStore.useProperties">true</prop>
 				<!-- 集群配置 -->
 				<prop key="org.quartz.jobStore.isClustered" >true</prop>
 				<prop key="org.quartz.jobStore.clusterCheckinInterval" >15000</prop>

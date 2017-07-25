@@ -1,7 +1,7 @@
 package com.heshan.dubbo.service.impl;
 
 import com.heshan.dubbo.dao.UserDao;
-import com.heshan.dubbo.service.UserService;
+import com.heshan.dubbo.service.IUserService;
 import com.heshan.dubbo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @date 2016/5/24 16:07
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
 
 

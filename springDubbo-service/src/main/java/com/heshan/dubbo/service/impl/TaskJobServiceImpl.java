@@ -25,33 +25,32 @@ public class TaskJobServiceImpl  implements ITaskJobService {
 
 
     @Override
-    public void insertTaskJob(TaskJob taskJob) {
+    public void saveTaskJob(TaskJob taskJob) {
 
         if (!checkTaskJobParam(taskJob,"INS")) {
             System.out.println("检查失败");
         }
-        /**操作quartz*/
         taskDao.save(taskJob);
-        /**立即执行*/
+        /**执行一次*/
         if(taskJob.getRunType()==1){
             try {
                 synchronized (this) {
                     QuartzJob job  = new QuartzJob();
-                    JobDataMap mapDate = new JobDataMap();
-                    mapDate.put("topic", taskJob.getTopic());
-                    QuartzManager.runJob(taskJob.getId()+"",job,taskJob.getJobQuartzTime(),mapDate,schedulerFactory);
+                    JobDataMap mapData = new JobDataMap();
+                    mapData.put("topic", taskJob.getTopic());
+                    QuartzManager.runJob(taskJob.getId()+"",job,taskJob.getJobQuartzTime(),mapData,schedulerFactory);
                 }
             } catch (SchedulerException e) {
                 e.printStackTrace();
             }
-         /**循环执行*/
-        }else if(taskJob.getRunType()==2){
+        }//周期性执行
+        else if(taskJob.getRunType()==2){
             try {
                 synchronized (this) {
                     QuartzJob job  = new QuartzJob();
-                    JobDataMap mapDate = new JobDataMap();
-                    mapDate.put("topic", taskJob.getTopic());
-                    QuartzManager.addJob(taskJob.getId()+"", job,taskJob.getJobQuartzTime(),mapDate,schedulerFactory);
+                    JobDataMap mapData = new JobDataMap();
+                    mapData.put("topic", taskJob.getTopic());
+                    QuartzManager.addJob(taskJob.getId()+"", job,taskJob.getJobQuartzTime(),mapData,schedulerFactory);
                 }
             } catch (SchedulerException e) {
                 e.printStackTrace();

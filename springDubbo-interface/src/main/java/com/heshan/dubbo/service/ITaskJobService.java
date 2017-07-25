@@ -8,14 +8,14 @@ public interface ITaskJobService {
     
     /***
      * 
-    * @Title: insertTaskJob 
+    * @Title: saveTaskJob
     * @Description: TODO(新增) 
     * @param @param req
     * @param @return    设定文件 
     * @return ServiceResult<TaskJobInsResp>    返回类型 
     * @throws
      */
-    void insertTaskJob(TaskJob req);
+    void saveTaskJob(TaskJob req);
 
     void modifiedTaskJobTime(TaskJob req);
 

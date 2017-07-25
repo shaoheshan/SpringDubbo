@@ -11,7 +11,7 @@ import java.util.Map;
  * @description
  * @date 2016/5/24 15:56
  */
-public interface UserService {
+public interface IUserService {
 
     public void  save(User user);
 

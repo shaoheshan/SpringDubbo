@@ -34,8 +34,7 @@ public class QuartzJob implements Job {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        /**业务逻辑*/     
-        //execJobTest(context);
+        //执行业务
         execJob(context);
         
     }
