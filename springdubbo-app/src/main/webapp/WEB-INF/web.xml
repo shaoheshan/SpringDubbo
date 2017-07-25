@@ -7,7 +7,7 @@
 	<listener>
 		<listener-class>com.heshan.dubbo.listener.LaunchServletContextListener</listener-class>
 	</listener>
-	<!--<listener>
+	<listener>
 		<listener-class>
 			org.quartz.ee.servlet.QuartzInitializerListener
 		</listener-class>
@@ -23,7 +23,7 @@
 	<context-param>
 		<param-name>quartz:start-on-load</param-name>
 		<param-value>true</param-value>
-	</context-param>-->
+	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>

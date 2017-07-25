@@ -4,6 +4,7 @@
 package com.heshan.dubbo.service.utils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.quartz.*;
@@ -42,13 +43,15 @@ public class QuartzManager {
 					if (mapData!=null){
 						jobDetail.getJobDataMap().putAll(mapData);
 					}
+					SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date date=sf.parse((String) mapData.get("endTime"));
 					//jobDetail.getJobDataMap().put("jobSays", "Hello World!");
 					//jobDetail.getJobDataMap().put("scheduleJob", mapData);
 		            //表达式调度构建器
 		            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);
 		            //按新的cronExpression表达式构建一个新的trigger
-		            trigger = TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME).withSchedule(scheduleBuilder).build();
-		            scheduler.scheduleJob(jobDetail, trigger);
+		            trigger = TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME).withSchedule(scheduleBuilder).endAt(date).build();
+					scheduler.scheduleJob(jobDetail, trigger);
 		        } 
                 if (!scheduler.isShutdown())
                     scheduler.start();
@@ -147,7 +150,7 @@ public class QuartzManager {
           scheduler.resumeJob(jobName, JOB_GROUP_NAME);*/
         
     }    
-    /**立即执行*/
+    /**一次执行*/
     public static void runJob(String jobName,Job job, String time,JobDataMap mapData,SchedulerFactoryBean schedulerFactory) throws SchedulerException{
           /**2.2.1*/
           Scheduler scheduler =  schedulerFactory.getScheduler();
@@ -157,19 +160,16 @@ public class QuartzManager {
           //不存在，创建一个
           if (null == trigger) {
               JobDetail jobDetail = JobBuilder.newJob(QuartzJob.class)
-                      .withIdentity(jobName, JOB_GROUP_NAME).build();
+                      .withIdentity(jobName, JOB_GROUP_NAME).storeDurably().build();
                   //表达式调度构建器
-                  SimpleTriggerImpl  simpleTriggerImpl = (SimpleTriggerImpl)TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME)
-						  .withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount(1,1))//配置重复次数和间隔时间
-						  .startNow()//设置从当前开始
-						  .build();
+                  SimpleTriggerImpl  simpleTriggerImpl = (SimpleTriggerImpl)TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME).build();
                   scheduler.scheduleJob(jobDetail, simpleTriggerImpl);
-                 // scheduler.addJob(jobDetail, true);
+                  scheduler.addJob(jobDetail, true);
           }
          
-         // JobKey jobKey = JobKey.jobKey(jobName, JOB_GROUP_NAME);
+          JobKey jobKey = JobKey.jobKey(jobName, JOB_GROUP_NAME);
           //scheduler.deleteJob(jobKey);
-        //  scheduler.triggerJob(jobKey);
+		   scheduler.triggerJob(jobKey);
 //          if (!scheduler.isShutdown())
 //              scheduler.start();
           /**1.8.5*/
@@ -185,7 +185,44 @@ public class QuartzManager {
           if (!sched.isShutdown())
               sched.start();*/
     }
+	/**执行多次*/
+	public static void runJobCount(String jobName,Job job, String time,JobDataMap mapData,SchedulerFactoryBean schedulerFactory) throws SchedulerException{
+		/**2.2.1*/
+		Scheduler scheduler =  schedulerFactory.getScheduler();
 
+		TriggerKey triggerKey = TriggerKey.triggerKey(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME);
+		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+		//不存在，创建一个
+		if (null == trigger) {
+			JobDetail jobDetail = JobBuilder.newJob(QuartzJob.class)
+					.withIdentity(jobName, JOB_GROUP_NAME).build();
+			//表达式调度构建器
+			SimpleTriggerImpl  simpleTriggerImpl = (SimpleTriggerImpl)TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME)
+					.withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount(1,1))//配置重复次数和间隔时间
+					.startNow()//设置从当前开始
+					.build();
+			scheduler.scheduleJob(jobDetail, simpleTriggerImpl);
+			// scheduler.addJob(jobDetail, true);
+		}
+
+		// JobKey jobKey = JobKey.jobKey(jobName, JOB_GROUP_NAME);
+		//scheduler.deleteJob(jobKey);
+		//  scheduler.triggerJob(jobKey);
+        //  if (!scheduler.isShutdown())
+        // scheduler.start();
+		/**1.8.5*/
+          /*Scheduler sched = schedulerFactory.getScheduler();
+          JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, job.getClass());// 任务名，任务组，任务执行类
+          jobDetail.setJobDataMap(mapData);
+          Date now = new Date();
+          SimpleTrigger simpleTrigger = new SimpleTrigger(JOb_TRIGGER+jobName,TRIGGER_GROUP_NAME, new Date(now.getTime() + 1000L),null,0,0L);
+          sched.scheduleJob(jobDetail, simpleTrigger);
+          sched.deleteJob(jobName, JOB_GROUP_NAME);
+          sched.addJob(jobDetail, true);
+          sched.scheduleJob(simpleTrigger);
+          if (!sched.isShutdown())
+              sched.start();*/
+	}
 	/**
 	 * 移除一个任务
 	 * @param jobName

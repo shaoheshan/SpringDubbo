@@ -28,14 +28,15 @@ public class QuartzTest {
     @Test
     public void addJobTest() {
         try {
-            String job_name = "1902";
+            String job_name = "1903";
             System.out.println("开始(新增任务)...");
             QuartzJob job  = new QuartzJob();
             //传值
             JobDataMap mapDate = new JobDataMap();
             mapDate.put("accountId", "account_id");
-            QuartzManager.addJob(job_name, job, "0 0/1 * * * ?",mapDate,schedulerFactory);
-            TimeUnit.MINUTES.sleep(10);
+            mapDate.put("endTime","2017-07-25 15:11:00");
+            QuartzManager.addJob(job_name, job, "0 0/2 * * * ?",mapDate,schedulerFactory);
+            TimeUnit.MINUTES.sleep(20);
         } catch (Exception e) {
             e.printStackTrace();
         }
