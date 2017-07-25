@@ -39,7 +39,11 @@ public class QuartzManager {
 		        if (null == trigger) {
 		            JobDetail jobDetail = JobBuilder.newJob(QuartzJob.class)
 		                .withIdentity(jobName, JOB_GROUP_NAME).build();
-		            //jobDetail.getJobDataMap().put("scheduleJob", jobDetail);
+					if (mapDate!=null){
+						jobDetail.getJobDataMap().putAll(mapDate);
+					}
+					//jobDetail.getJobDataMap().put("jobSays", "Hello World!");
+					//jobDetail.getJobDataMap().put("scheduleJob", mapDate);
 		            //表达式调度构建器
 		            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);
 		            //按新的cronExpression表达式构建一个新的trigger

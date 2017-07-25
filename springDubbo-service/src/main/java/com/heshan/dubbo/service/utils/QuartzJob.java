@@ -1,12 +1,16 @@
 package com.heshan.dubbo.service.utils;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.dubbo.common.utils.LogUtil;
 import com.heshan.framework.log.LogUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;
 import org.quartz.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Properties;
 
@@ -21,20 +25,9 @@ import java.util.Properties;
 @DisallowConcurrentExecution
 public class QuartzJob implements Job {
 
-
-    /** 信息发送类 */
-    private Properties properties;
-
     /** 任务id */
     private String task_id;
-    /** 队列主题 */
-    private String topic;
-    /** 队列传参 */
-    private String accountId;
-    /** 队列过滤 */
-    private String taskTag;
-    /** 当前时间 */
-    private Long currDate;
+;
 
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(QuartzJob.class);
 
@@ -51,7 +44,13 @@ public class QuartzJob implements Job {
 
         LogUtils.error("开始时间"+sdf.format(new Date()));
         try {
-            // JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+            JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+            String[] keys=dataMap.getKeys();
+            if (!ArrayUtils.isEmpty(keys)){
+                for(String key:keys){
+                    LogUtils.error("data:{key:="+key+",value:="+dataMap.get(key));
+                }
+            }
             /** 获取job信息 */
             /** 消息id */
             task_id = context.getJobDetail().getKey().getName();
