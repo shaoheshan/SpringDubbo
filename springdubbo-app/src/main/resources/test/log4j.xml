@@ -134,9 +134,10 @@
 	</logger>
 
 	<logger name="perf" additivity="false">
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="LCONFIG-PERF" />
 		<appender-ref ref="DEFAULT-APPENDER" />
+		<appender-ref ref="console" />
 	</logger>
 
 	<logger name="alarm" additivity="false">
@@ -157,13 +158,25 @@
 		<appender-ref ref="DEFAULT-APPENDER" />
 	</logger>
 
-
-	<category name="com.ibatis">
-		<priority value="DEBUG" />
-	</category>
+    <!--打印sql-->
+	<!--<logger name="com.ibatis" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="Java.sql.Connection" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.PreparedStatement" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.ResultSet" additivity="true">
+		<level value="DEBUG" />
+	</logger>-->
 
 	<root>
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="console" />
 	</root>
 

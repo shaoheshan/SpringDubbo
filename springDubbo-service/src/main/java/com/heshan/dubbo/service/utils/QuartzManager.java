@@ -43,14 +43,14 @@ public class QuartzManager {
 					if (mapData!=null){
 						jobDetail.getJobDataMap().putAll(mapData);
 					}
-					SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					Date date=sf.parse((String) mapData.get("endTime"));
+					//SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					//Date date=sf.parse((String) mapData.get("endTime"));
 					//jobDetail.getJobDataMap().put("jobSays", "Hello World!");
 					//jobDetail.getJobDataMap().put("scheduleJob", mapData);
 		            //表达式调度构建器
 		            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);
 		            //按新的cronExpression表达式构建一个新的trigger
-		            trigger = TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME).withSchedule(scheduleBuilder).endAt(date).build();
+		            trigger = TriggerBuilder.newTrigger().withIdentity(JOb_TRIGGER+jobName, TRIGGER_GROUP_NAME).withSchedule(scheduleBuilder).endAt(null).build();
 					scheduler.scheduleJob(jobDetail, trigger);
 		        } 
                 if (!scheduler.isShutdown())
@@ -167,9 +167,9 @@ public class QuartzManager {
                   scheduler.addJob(jobDetail, true);
           }
          
-          JobKey jobKey = JobKey.jobKey(jobName, JOB_GROUP_NAME);
+          //JobKey jobKey = JobKey.jobKey(jobName, JOB_GROUP_NAME);
           //scheduler.deleteJob(jobKey);
-		   scheduler.triggerJob(jobKey);
+		   //scheduler.triggerJob(jobKey);
 //          if (!scheduler.isShutdown())
 //              scheduler.start();
           /**1.8.5*/
