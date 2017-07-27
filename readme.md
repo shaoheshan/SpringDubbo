@@ -1,9 +1,10 @@
-SpringMVC+Spring+MyBatis
+SpringMVC+Spring+MyBatis+Dubbo
 ========================
 系统结构
 -----------------------------------
 使用MAVEN进行模块化构建
-
+dubbo服务提供
+基于Quartz进行任务调度
 Frameworks and Tools
 -----------------------------------
 * Java&IDE: JDK7 IDEA
