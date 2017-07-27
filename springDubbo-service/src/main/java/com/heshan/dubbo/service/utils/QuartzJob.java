@@ -18,7 +18,7 @@ import java.util.Properties;
  * @ClassName  QuartzJob
  * @Package  com.heshan.dubbo.service.utils
  * @Author Frank
- * @Description: 定时执行
+ * @Description: 定时执行 任务串行执行 只是针对同一个job的多个实例 多个job可以并行
  * @Date 11:26 2017/7/24
  */
 @PersistJobDataAfterExecution
@@ -27,7 +27,6 @@ public class QuartzJob implements Job {
 
     /** 任务id */
     private String task_id;
-;
 
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(QuartzJob.class);
 
@@ -41,13 +40,14 @@ public class QuartzJob implements Job {
     public void execJob(JobExecutionContext context) {
         System.err.println("开始时间"+sdf.format(new Date()));
 
-        LogUtils.error("开始时间"+sdf.format(new Date()));
+        LogUtils.error("开始时间:"+sdf.format(new Date())+",毫秒"+System.currentTimeMillis());
+        LogUtils.error("执行线程:"+Thread.currentThread().getId());
         try {
             JobDataMap dataMap = context.getJobDetail().getJobDataMap();
             String[] keys=dataMap.getKeys();
             if (!ArrayUtils.isEmpty(keys)){
                 for(String key:keys){
-                    LogUtils.error("data:{key:="+key+",value:="+dataMap.get(key));
+                    LogUtils.error("data:{key:"+key+",value:"+dataMap.get(key)+"}");
                 }
             }
             /** 获取job信息 */
@@ -59,7 +59,7 @@ public class QuartzJob implements Job {
 
         }
         System.err.println("结束时间"+sdf.format(new Date()));
-        LogUtils.error("结束时间"+sdf.format(new Date())+",taskId="+task_id);
+        LogUtils.error("结束时间"+sdf.format(new Date())+",毫秒"+System.currentTimeMillis()+",taskId="+task_id);
 
     }
 

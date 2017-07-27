@@ -27,6 +27,11 @@ public class TaskJobServiceImpl  implements ITaskJobService {
     @Override
     public void saveTaskJob(TaskJob taskJob) {
 
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (!checkTaskJobParam(taskJob,"INS")) {
             System.out.println("检查失败");
         }

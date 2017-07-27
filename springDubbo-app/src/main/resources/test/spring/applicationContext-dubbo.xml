@@ -23,7 +23,7 @@
 	<d:protocol name="dubbo" port="${server_protocol_dubbo_port}" host="${server_host}" />
 
 	<!-- 声明需要暴露的服务接口 -->
-	<d:service interface="com.heshan.dubbo.service.ITaskJobService" ref="taskJobServiceImpl" />
+	<d:service interface="com.heshan.dubbo.service.ITaskJobService" ref="taskJobServiceImpl"  timeout="10000"/>
 
 	<!-- 和本地bean一样实现服务 -->
 	<!--<bean id="demoService" class="com.heshan.dubbo.DemoService.DemoServiceImpl"> /-->
